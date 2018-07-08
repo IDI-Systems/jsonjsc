@@ -10,7 +10,7 @@ class JSONCommentDecoder(json.JSONDecoder):
         parsed_lines = []
         input_lines = s.split('\n')
         for line in input_lines:
-            if not ("//" in line or "/*" in line or "*/" in line):
+            if not ('//' in line or '/*' in line or '*/' in line):
                 if in_multi_line:
                     line = ""
                 parsed_lines.append(line)
@@ -41,6 +41,6 @@ class JSONCommentDecoder(json.JSONDecoder):
                 elif in_multi_line:
                     line[ci] = ' '
 
-            parsed_lines.append("".join(line))
+            parsed_lines.append(''.join(line))
 
-        return "\n".join(parsed_lines)
+        return '\n'.join(parsed_lines)
