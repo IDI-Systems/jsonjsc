@@ -1,58 +1,62 @@
+"""
+Unit tests for parser/JSONDecoder
+"""
 import unittest
 import json
 
-from jsonjsc.parser import JSONCommentDecoder
+from jsonjsc.parser import parse
+from jsonjsc import JSONCommentDecoder
 
-test_comment_on_own_line = r'''{
+TEST_COMMENT_ON_OWN_LINE = r'''{
     // This is a comment on it's own line
 }'''
 
-test_single_comment_on_line_with_json = r'''{
+TEST_SINGLE_COMMENT_ON_LINE_WITH_JSON = r'''{
     "test": 123 // this is a comment after some JSON
 }'''
 
-test_double_forward_slash_in_string = r'''{
+TEST_DOUBLE_FORWARD_SLASH_IN_STRING = r'''{
     "test": "ab//cd"
 }'''
 
-test_block_comment_single_line_alone = r'''{
+TEST_BLOCK_COMMENT_SINGLE_LINE_ALONE = r'''{
     /* This is a block comment */
 }'''
 
-test_block_comment_single_line_before = r'''{
+TEST_BLOCK_COMMENT_SINGLE_LINE_BEFORE = r'''{
     /* This is a block comment */"test": "message"
 }'''
 
-test_block_comment_single_line_after = r'''{
+TEST_BLOCK_COMMENT_SINGLE_LINE_AFTER = r'''{
     "test": "message"/* This is a block comment */
 }'''
 
-test_block_comment_single_line_middle = r'''{
+TEST_BLOCK_COMMENT_SINGLE_LINE_MIDDLE = r'''{
     "test": /* This is a block comment */ "message"
 }'''
 
-test_block_comment_multiple_lines = r'''{
+TEST_BLOCK_COMMENT_MULTIPLE_LINES = r'''{
     /*
     This is a block comment
     */
     "test": "message"
 }'''
 
-test_commented_out_block_comment = r'''{
+TEST_COMMENTED_OUT_BLOCK_COMMENT = r'''{
     ///*
     "test": "message"
     //*/
 }'''
 
-test_escaped_string = r'''{
+TEST_ESCAPED_STRING = r'''{
     "test": "mess\"age" // This comment should go away!
 }'''
 
-test_block_comment_in_string = r'''{
+TEST_BLOCK_COMMENT_IN_STRING = r'''{
     "test": "mess/**/age"
 }'''
 
-test_json_decoder = r'''{
+TEST_JSON_DECODER = r'''{
     /*
     This is a test of the JSON decoder in full
     */
@@ -64,47 +68,47 @@ test_json_decoder = r'''{
     "test2": "message2"
 }'''
 
-class JSONCommentDecoderTests(unittest.TestCase):
-    def setUp(self):
-        self.decoder = JSONCommentDecoder()
-
+"""
+Test case for parser.
+"""
+class JSONCommentParserTests(unittest.TestCase):
     def test_comment_on_own_line(self):
-        result = self.decoder.parse(test_comment_on_own_line)
+        result = parse(TEST_COMMENT_ON_OWN_LINE)
         result = result.split('\n')
         self.assertEqual(result[1], r'    ')
 
     def test_single_comment_on_line_with_json(self):
-        result = self.decoder.parse(test_single_comment_on_line_with_json)
+        result = parse(TEST_SINGLE_COMMENT_ON_LINE_WITH_JSON)
         result = result.split('\n')
         self.assertEqual(result[1], r'    "test": 123 ')
 
     def test_double_forward_slash_in_string(self):
-        result = self.decoder.parse(test_double_forward_slash_in_string)
+        result = parse(TEST_DOUBLE_FORWARD_SLASH_IN_STRING)
         result = result.split('\n')
         self.assertEqual(result[1], r'    "test": "ab//cd"')
 
     def test_block_comment_single_line_alone(self):
-        result = self.decoder.parse(test_block_comment_single_line_alone)
+        result = parse(TEST_BLOCK_COMMENT_SINGLE_LINE_ALONE)
         result = result.split('\n')
         self.assertEqual(result[1], r'                                 ')
 
     def test_block_comment_single_line_before(self):
-        result = self.decoder.parse(test_block_comment_single_line_before)
+        result = parse(TEST_BLOCK_COMMENT_SINGLE_LINE_BEFORE)
         result = result.split('\n')
         self.assertEqual(result[1], r'                                 "test": "message"')
 
     def test_block_comment_single_line_after(self):
-        result = self.decoder.parse(test_block_comment_single_line_after)
+        result = parse(TEST_BLOCK_COMMENT_SINGLE_LINE_AFTER)
         result = result.split('\n')
         self.assertEqual(result[1], r'    "test": "message"                             ')
 
     def test_block_comment_single_line_middle(self):
-        result = self.decoder.parse(test_block_comment_single_line_middle)
+        result = parse(TEST_BLOCK_COMMENT_SINGLE_LINE_MIDDLE)
         result = result.split('\n')
         self.assertEqual(result[1], r'    "test":                               "message"')
 
     def test_block_comment_multiple_lines(self):
-        result = self.decoder.parse(test_block_comment_multiple_lines)
+        result = parse(TEST_BLOCK_COMMENT_MULTIPLE_LINES)
         result = result.split('\n')
         self.assertEqual(result[1], r'      ')
         self.assertEqual(result[2], r'')
@@ -112,24 +116,28 @@ class JSONCommentDecoderTests(unittest.TestCase):
         self.assertEqual(result[4], r'    "test": "message"')
 
     def test_commented_out_block_comment(self):
-        result = self.decoder.parse(test_commented_out_block_comment)
+        result = parse(TEST_COMMENTED_OUT_BLOCK_COMMENT)
         result = result.split('\n')
         self.assertEqual(result[1], r'    ')
         self.assertEqual(result[2], r'    "test": "message"')
         self.assertEqual(result[3], r'    ')
 
     def test_escaped_string(self):
-        result = self.decoder.parse(test_escaped_string)
+        result = parse(TEST_ESCAPED_STRING)
         result = result.split('\n')
         self.assertEqual(result[1], r'    "test": "mess\"age" ')
 
     def test_block_comment_in_string(self):
-        result = self.decoder.parse(test_block_comment_in_string)
+        result = parse(TEST_BLOCK_COMMENT_IN_STRING)
         result = result.split('\n')
         self.assertEqual(result[1], r'    "test": "mess/**/age"')
 
+"""
+Test case for JSONDecoder implementation.
+"""
+class JSONCommentDecoderTests(unittest.TestCase):
     def test_json_decoder(self):
-        test = json.loads(test_json_decoder, cls=JSONCommentDecoder)
+        test = json.loads(TEST_JSON_DECODER, cls=JSONCommentDecoder)
         self.assertIn("test1", test)
         self.assertNotIn("junk1", test)
         self.assertNotIn("junk2", test)

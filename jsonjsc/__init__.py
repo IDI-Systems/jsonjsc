@@ -1,0 +1,1 @@
+from jsonjsc.decoder import JSONCommentDecoder
