@@ -7,6 +7,10 @@
 # jsonjsc
 A Python library for parsing out C/Javascript style comments in JSON files.
 
+## Install
+
+`pip install jsonjsc`
+
 ## Features
 1. Simple and easy to use library with no other dependencies.
 1. Supports C/JS block (`/* */`) and single line (`//`) comments.
