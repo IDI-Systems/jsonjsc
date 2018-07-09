@@ -1,3 +1,9 @@
+[![Build Status](https://travis-ci.org/NouberNou/jsonjsc.svg?branch=master)](https://travis-ci.org/NouberNou/jsonjsc)
+[![PyPI version fury.io](https://badge.fury.io/py/jsonjsc.svg)](https://pypi.python.org/pypi/jsonjsc/)
+[![GitHub license](https://img.shields.io/github/license/NouberNou/jsonjsc.svg)](https://github.com/NouberNou/jsonjsc/blob/master/LICENSE)
+[![PyPI pyversions](https://img.shields.io/pypi/pyversions/jsonjsc.svg)](https://pypi.python.org/pypi/jsonjscs/)
+
+
 # jsonjsc
 A Python library for parsing out C/Javascript style comments in JSON files.
 
