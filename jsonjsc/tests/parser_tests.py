@@ -11,6 +11,10 @@ TEST_COMMENT_ON_OWN_LINE = r'''{
     // This is a comment on it's own line
 }'''
 
+TEST_COMMENT_ON_OWN_LINE_NO_TAB = r'''{
+// This is a comment on it's own line
+}'''
+
 TEST_SINGLE_COMMENT_ON_LINE_WITH_JSON = r'''{
     "test": 123 // this is a comment after some JSON
 }'''
@@ -21,6 +25,10 @@ TEST_DOUBLE_FORWARD_SLASH_IN_STRING = r'''{
 
 TEST_BLOCK_COMMENT_SINGLE_LINE_ALONE = r'''{
     /* This is a block comment */
+}'''
+
+TEST_BLOCK_COMMENT_SINGLE_LINE_ALONE_NO_TAB = r'''{
+/* This is a block comment */
 }'''
 
 TEST_BLOCK_COMMENT_SINGLE_LINE_BEFORE = r'''{
@@ -39,6 +47,20 @@ TEST_BLOCK_COMMENT_MULTIPLE_LINES = r'''{
     /*
     This is a block comment
     */
+    "test": "message"
+}'''
+
+TEST_BLOCK_COMMENT_MULTIPLE_LINES_NO_TAB = r'''{
+/*
+This is a block comment
+*/
+    "test": "message"
+}'''
+
+TEST_BLOCK_COMMENT_MULTIPLE_LINES_NO_TAB_FANCY = r'''{
+/*
+ * This is a block comment
+ */
     "test": "message"
 }'''
 
@@ -77,6 +99,11 @@ class JSONCommentParserTests(unittest.TestCase):
         result = result.split('\n')
         self.assertEqual(result[1], r'    ')
 
+    def test_comment_on_own_line_no_tab(self):
+        result = parse(TEST_COMMENT_ON_OWN_LINE_NO_TAB)
+        result = result.split('\n')
+        self.assertEqual(result[1], r'')
+
     def test_single_comment_on_line_with_json(self):
         result = parse(TEST_SINGLE_COMMENT_ON_LINE_WITH_JSON)
         result = result.split('\n')
@@ -91,6 +118,12 @@ class JSONCommentParserTests(unittest.TestCase):
         result = parse(TEST_BLOCK_COMMENT_SINGLE_LINE_ALONE)
         result = result.split('\n')
         self.assertEqual(result[1], r'                                 ')
+
+    def test_block_comment_single_line_alone_no_tab(self):
+        result = parse(TEST_BLOCK_COMMENT_SINGLE_LINE_ALONE_NO_TAB)
+        result = result.split('\n')
+        print(result)
+        self.assertEqual(result[1], r'                             ')
 
     def test_block_comment_single_line_before(self):
         result = parse(TEST_BLOCK_COMMENT_SINGLE_LINE_BEFORE)
@@ -113,6 +146,22 @@ class JSONCommentParserTests(unittest.TestCase):
         self.assertEqual(result[1], r'      ')
         self.assertEqual(result[2], r'')
         self.assertEqual(result[3], r'      ')
+        self.assertEqual(result[4], r'    "test": "message"')
+
+    def test_block_comment_multiple_lines_no_tab(self):
+        result = parse(TEST_BLOCK_COMMENT_MULTIPLE_LINES_NO_TAB)
+        result = result.split('\n')
+        self.assertEqual(result[1], r'  ')
+        self.assertEqual(result[2], r'')
+        self.assertEqual(result[3], r'  ')
+        self.assertEqual(result[4], r'    "test": "message"')
+
+    def test_block_comment_multiple_lines_no_tab_fancy(self):
+        result = parse(TEST_BLOCK_COMMENT_MULTIPLE_LINES_NO_TAB_FANCY)
+        result = result.split('\n')
+        self.assertEqual(result[1], r'  ')
+        self.assertEqual(result[2], r'')
+        self.assertEqual(result[3], r'   ')
         self.assertEqual(result[4], r'    "test": "message"')
 
     def test_commented_out_block_comment(self):

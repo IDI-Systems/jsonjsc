@@ -26,18 +26,18 @@ def parse(s):
             if not in_multi_line:
                 if not in_string and c == '"':
                     in_string = True
-                elif in_string and c == '"' and line[ci-1] != '\\':
+                elif in_string and c == '"' and ci > 0 and line[ci-1] != '\\':
                     in_string = False
-                if not in_string and c == '/' and line[ci-1] == '/':
+                if not in_string and c == '/' and ci > 0 and line[ci-1] == '/':
                     line = line[:ci-1]
                     break
-            if not in_string and not in_multi_line and c == '*' and line[ci-1] == '/':
+            if not in_string and not in_multi_line and c == '*' and ci > 0 and line[ci-1] == '/':
                 line[ci] = ' '
                 line[ci-1] = ' '
                 in_multi_line = True
             elif in_multi_line and c == '*' and line[ci+1] == '/':
                 line[ci] = ' '
-                line[ci + 1] = ' '
+                line[ci+1] = ' '
                 in_multi_line = False
             elif in_multi_line:
                 line[ci] = ' '

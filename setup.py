@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="jsonjsc",
-    version="1.1.0",
+    version="1.1.1",
     author="C. Foster",
     author_email="korewananda@gmail.com",
     description="A package to parse out C/JS style block and single line comments from JSON files",
