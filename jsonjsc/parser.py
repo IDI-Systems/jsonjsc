@@ -35,7 +35,7 @@ def parse(s):
                 line[ci] = ' '
                 line[ci-1] = ' '
                 in_multi_line = True
-            elif in_multi_line and c == '*' and line[ci+1] == '/':
+            elif in_multi_line and c == '*' and ci+1 < len(line) and line[ci+1] == '/':
                 line[ci] = ' '
                 line[ci+1] = ' '
                 in_multi_line = False

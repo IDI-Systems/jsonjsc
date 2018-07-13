@@ -78,6 +78,13 @@ TEST_BLOCK_COMMENT_IN_STRING = r'''{
     "test": "mess/**/age"
 }'''
 
+TEST_FANCY_BLOCK_COMMENT = r'''{
+/************************
+This is a fancy comment!
+************************/
+    "test": "message"
+}'''
+
 TEST_JSON_DECODER = r'''{
     /*
     This is a test of the JSON decoder in full
@@ -122,7 +129,6 @@ class JSONCommentParserTests(unittest.TestCase):
     def test_block_comment_single_line_alone_no_tab(self):
         result = parse(TEST_BLOCK_COMMENT_SINGLE_LINE_ALONE_NO_TAB)
         result = result.split('\n')
-        print(result)
         self.assertEqual(result[1], r'                             ')
 
     def test_block_comment_single_line_before(self):
@@ -180,6 +186,14 @@ class JSONCommentParserTests(unittest.TestCase):
         result = parse(TEST_BLOCK_COMMENT_IN_STRING)
         result = result.split('\n')
         self.assertEqual(result[1], r'    "test": "mess/**/age"')
+
+    def test_fancy_block_comment(self):
+        result = parse(TEST_FANCY_BLOCK_COMMENT)
+        result = result.split('\n')
+        self.assertEqual(result[1], r'                         ')
+        self.assertEqual(result[2], r'')
+        self.assertEqual(result[3], r'                         ')
+        self.assertEqual(result[4], r'    "test": "message"')
 
 """
 Test case for JSONDecoder implementation.
