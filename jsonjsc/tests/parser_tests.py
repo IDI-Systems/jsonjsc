@@ -97,10 +97,11 @@ TEST_JSON_DECODER = r'''{
     "test2": "message2"
 }'''
 
-"""
-Test case for parser.
-"""
+
 class JSONCommentParserTests(unittest.TestCase):
+    """
+    Test case for parser.
+    """
     def test_comment_on_own_line(self):
         result = parse(TEST_COMMENT_ON_OWN_LINE)
         result = result.split('\n')
@@ -195,10 +196,11 @@ class JSONCommentParserTests(unittest.TestCase):
         self.assertEqual(result[3], r'                         ')
         self.assertEqual(result[4], r'    "test": "message"')
 
-"""
-Test case for JSONDecoder implementation.
-"""
+
 class JSONCommentDecoderTests(unittest.TestCase):
+    """
+    Test case for JSONDecoder implementation.
+    """
     def test_json_decoder(self):
         test = json.loads(TEST_JSON_DECODER, cls=JSONCommentDecoder)
         self.assertIn("test1", test)
@@ -208,6 +210,7 @@ class JSONCommentDecoderTests(unittest.TestCase):
 
         self.assertEqual(test["test1"], "message1")
         self.assertEqual(test["test2"], "message2")
+
 
 if __name__ == '__main__':
     unittest.main()
