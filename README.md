@@ -21,6 +21,12 @@ A Python library for parsing out C/Javascript style comments in JSON files.
 -  Is easily dropped into existing JSON library usage as a decoder class.
 -  Test backed via `unittest`.
 
+#### Python 2
+
+jsonjsc v1.1.2 is the last version to support Python 2.7.
+
+`pip install jsonjsc==1.1.2`
+
 
 ## Example
 
