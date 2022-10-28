@@ -45,9 +45,6 @@ packages = ["jsonjsc"]
 [tool.hatch.version]
 source = "vcs"
 
-[tool.hatch.build.hooks.vcs]
-version-file = "jsonjsc/_version.py"
-
 ## Hatch environments
 
 [tool.hatch.envs.default]

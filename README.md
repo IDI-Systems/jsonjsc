@@ -57,7 +57,35 @@ print(test["test2"])
 ```
 
 
-## TODOs
+## Development
+
+jsonjsc uses [Hatchling](https://hatch.pypa.io/latest/) as a build backend and [flake8](https://flake8.pycqa.org/en/latest/) as a style guide.
+
+```
+$ pip install -e .
+```
+
+[Hatch](https://hatch.pypa.io/latest/) is the primary project manager of choice, but any project adhering to PEP 621 (`pyproject.toml` specification) can be used.
+
+```
+$ hatch shell
+```
+
+### Tests
+
+Tests can be ran with [pytest](https://docs.pytest.org/). Hatch scripts are included for linting and testing.
+
+```
+# Lint
+$ hatch run lint:all
+
+# Test with current Python version
+$ hatch run full
+# Test with all Python versions
+$ hatch run test:full
+```
+
+### TODOs
 
 Implementation could probably be sped up significantly as it uses character by character searches to test if comments are in string values or not. No performance metrics have been taken.
 
