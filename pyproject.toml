@@ -11,12 +11,17 @@ authors = [
 description = "A package to parse out C/JS style block and single line comments from JSON files."
 readme = "README.md"
 license = "MIT"
-requires-python = ">=2.7"
+requires-python = ">=2.7, >=3.5"
 classifiers = [
   "Intended Audience :: Developers",
   "Programming Language :: Python :: 2.7",
   "Programming Language :: Python :: 3.5",
   "Programming Language :: Python :: 3.6",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
   "License :: OSI Approved :: MIT License",
   "Operating System :: OS Independent",
   "Development Status :: 5 - Production/Stable",
