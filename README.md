@@ -1,24 +1,29 @@
-[![Build Status](https://travis-ci.org/NouberNou/jsonjsc.svg?branch=master)](https://travis-ci.org/NouberNou/jsonjsc)
-[![PyPI version fury.io](https://badge.fury.io/py/jsonjsc.svg)](https://pypi.python.org/pypi/jsonjsc/)
-[![GitHub license](https://img.shields.io/github/license/NouberNou/jsonjsc.svg)](https://github.com/NouberNou/jsonjsc/blob/master/LICENSE)
-[![PyPI pyversions](https://img.shields.io/pypi/pyversions/jsonjsc.svg)](https://pypi.python.org/pypi/jsonjsc/)
-
-
 # jsonjsc
+
+[![CI - Test](https://github.com/IDI-Systems/jsonjsc/actions/workflows/test.yml/badge.svg)](https://github.com/IDI-Systems/jsonjsc/actions/workflows/test.yml)
+[![CI - Build](https://github.com/IDI-Systems/jsonjsc/actions/workflows/build.yml/badge.svg)](https://github.com/IDI-Systems/jsonjsc/actions/workflows/build.yml)
+[![PyPI - Version](https://img.shields.io/pypi/v/jsonjsc.svg?logo=pypi&label=PyPI&logoColor=gold)](https://pypi.org/project/jsonjsc)
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/jsonjsc.svg?logo=python&label=Python&logoColor=gold)](https://pypi.org/project/jsonjsc)
+
 A Python library for parsing out C/Javascript style comments in JSON files.
+
 
 ## Install
 
 `pip install jsonjsc`
 
+
 ## Features
-1. Simple and easy to use library with no other dependencies.
-1. Supports C/JS block (`/* */`) and single line (`//`) comments.
-1. Retains the line number and character column of JSON content after parsing, letting syntax error positions get properly reported by the normal Python JSON decoder.
-1. Is easily dropped into existing JSON library usage as a decoder class.
-1. Test backed via `unittest`.
+
+-  Simple and easy to use library with no other dependencies.
+-  Supports C/JS block (`/* */`) and single line (`//`) comments.
+-  Retains the line number and character column of JSON content after parsing, letting syntax error positions get properly reported by the normal Python JSON decoder.
+-  Is easily dropped into existing JSON library usage as a decoder class.
+-  Test backed via `unittest`.
+
 
 ## Example
+
 ```python
 import json
 import jsonjsc
@@ -28,7 +33,7 @@ TEST_JSON_DECODER = r'''{
     This is a test of the JSON decoder in full
     */
     "test1": "message1", // this comment should parse out.
-    
+
     // "junk1": "message",
 
     /*
@@ -51,9 +56,11 @@ if "junk2" not in test:
 print(test["test2"])
 ```
 
+
 ## TODOs
 
 Implementation could probably be sped up significantly as it uses character by character searches to test if comments are in string values or not. No performance metrics have been taken.
+
 
 ## License
 
