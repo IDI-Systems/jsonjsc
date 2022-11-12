@@ -1,12 +1,12 @@
-"""Parses out C/JS block and single line comments.
-
-Also preserves line numbering and character column count for reporting
-JSON syntax errors.
-
-Returns:
-    str -- The parsed JSON string with comments removed.
-"""
 def parse(s):
+    """Parses out C/JS block and single line comments.
+
+    Also preserves line numbering and character column count for reporting
+    JSON syntax errors.
+
+    Returns:
+        str -- The parsed JSON string with comments removed.
+    """
     in_multi_line = False
     parsed_lines = []
     input_lines = s.split('\n')
